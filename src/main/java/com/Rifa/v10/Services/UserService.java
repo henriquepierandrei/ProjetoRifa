@@ -50,4 +50,8 @@ public class UserService {
         return ticketOfUserModels;
 
     }
+
+    public TicketOfUserModel getTicketsId(long id, long idCampaing) {
+        return this.ticketOfUserRepository.findByIdAndIdCampaign(id,idCampaing);
+    }
 }
