@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -15,10 +16,12 @@ import java.util.List;
 public class TicketsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private UUID id;
+
 
     private String nameAward;
     private String description;
+
 
     private List<Integer> winningNumbers;
     private int ticketQuantity;
@@ -29,7 +32,7 @@ public class TicketsModel {
 
     private boolean isOnline=false;
 
-    
+
     private List<Integer> generatedNumbers;
 
 
