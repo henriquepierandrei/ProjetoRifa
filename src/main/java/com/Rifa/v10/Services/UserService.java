@@ -2,10 +2,12 @@ package com.Rifa.v10.Services;
 
 import com.Rifa.v10.Models.TicketOfUserModel;
 import com.Rifa.v10.Models.UserModel;
+import com.Rifa.v10.Repositories.TicketOfUserRepository;
 import com.Rifa.v10.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final TicketOfUserRepository ticketOfUserRepository;
 
 
     public Optional<UserModel> getUserByEmail(String email) {
@@ -42,5 +45,9 @@ public class UserService {
     }
 
 
-    public List<TicketOfUserModel> getAllTickets()
+    public List<TicketOfUserModel> getAllTickets(long id){
+        List<TicketOfUserModel> ticketOfUserModels = this.ticketOfUserRepository.findByIdUser(id);
+        return ticketOfUserModels;
+
+    }
 }

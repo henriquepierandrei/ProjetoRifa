@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CampaingModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
 

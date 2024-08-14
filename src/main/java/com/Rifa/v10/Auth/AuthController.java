@@ -57,15 +57,16 @@ public class AuthController {
             newUser.setEmail(body.email());
             newUser.setName(body.name());
             newUser.setLastName(body.lastName());
-            if (this.cpfValidatorService.isValid(body.cpf())){return ResponseEntity.badRequest().body("CPF Invalid!");}
+            if (!this.cpfValidatorService.isValid(body.cpf())){return ResponseEntity.badRequest().body("CPF Invalid!");}
             newUser.setCpf(body.cpf());
 
-            this.userService.save(newUser);
+
 
             String token = this.tokenService.generateToken(newUser);
             if (!this.userService.isValidCpf(body.cpf()) || !this.userService.isValidEmail(body.email()) || !this.userService.isValidPhone(body.phone())){
                 return ResponseEntity.badRequest().body("Existing data!");
             }
+            this.userService.save(newUser);
             return ResponseEntity.ok(new ResponseRegisterDto(newUser.getName(), newUser.getLastName(), newUser.getCpf(), newUser.getEmail(), token));
         }
 

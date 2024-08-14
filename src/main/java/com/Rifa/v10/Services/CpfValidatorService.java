@@ -1,6 +1,5 @@
 package com.Rifa.v10.Services;
 
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +19,17 @@ public class CpfValidatorService {
             digits[i] = Character.getNumericValue(cpf.charAt(i));
         }
 
-        return (calculateDigit(digits, 10) == digits[9] && calculateDigit(digits, 11) == digits[10]);
+        // Check if CPF is not a sequence of identical digits
+        String cpfSequence = cpf.replaceAll("(.)(?=.*\\1)", "");
+        if (cpfSequence.length() == 1) {
+            return false;
+        }
+
+        // Validate CPF
+        int firstDigit = calculateDigit(digits, 10);
+        int secondDigit = calculateDigit(digits, 11);
+
+        return firstDigit == digits[9] && secondDigit == digits[10];
     }
 
     private int calculateDigit(int[] digits, int factor) {

@@ -1,8 +1,11 @@
 package com.Rifa.v10.Controllers;
 
 import com.Rifa.v10.Models.CampaingModel;
+import com.Rifa.v10.Models.TicketOfUserModel;
 import com.Rifa.v10.Models.UserModel;
+import com.Rifa.v10.Services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +19,11 @@ import java.util.List;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-    @GetMapping("/tickets")
-    public ResponseEntity getAllTickets(@AuthenticationPrincipal UserModel userModel){
-        List<CampaingModel> campaingModels = new ArrayList<>();
+    private final UserService userService;
 
+
+    @GetMapping("/tickets")
+    public ResponseEntity<List<TicketOfUserModel>> getAllTickets(@AuthenticationPrincipal UserModel userModel){
+        return ResponseEntity.status(HttpStatus.FOUND).body(this.userService.getAllTickets(userModel.getId()));
     }
 }
