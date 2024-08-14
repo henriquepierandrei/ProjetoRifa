@@ -3,7 +3,7 @@ package com.Rifa.v10.Infra.Security;
 
 
 
-import com.Monitoramento.API_Transportadora.models.UserModel;
+import com.Rifa.v10.Models.UserModel;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

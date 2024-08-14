@@ -1,7 +1,8 @@
 package com.Rifa.v10.Infra.Security;
 
-import com.Monitoramento.API_Transportadora.models.UserModel;
-import com.Monitoramento.API_Transportadora.repositories.UserRepository;
+
+import com.Rifa.v10.Models.UserModel;
+import com.Rifa.v10.Repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var login = tokenService.validateToken(token);
 
         if (login != null) {
-            UserModel user = userRepository.findByEmail(login)
+            UserModel user = (UserModel) userRepository.findByEmail(login)
                     .orElseThrow(() -> new RuntimeException("User Not Found"));
 
 
