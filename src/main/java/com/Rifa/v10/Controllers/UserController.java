@@ -1,6 +1,6 @@
 package com.Rifa.v10.Controllers;
 
-import com.Rifa.v10.Models.TicketsModel;
+import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.UserModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.List;
 public class UserController {
     @GetMapping("/tickets")
     public ResponseEntity getAllTickets(@AuthenticationPrincipal UserModel userModel){
-        List<TicketsModel> ticketsModels = new ArrayList<>();
+        List<CampaingModel> campaingModels = new ArrayList<>();
 
     }
 }

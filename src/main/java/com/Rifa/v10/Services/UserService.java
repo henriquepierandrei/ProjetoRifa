@@ -1,10 +1,12 @@
 package com.Rifa.v10.Services;
 
+import com.Rifa.v10.Models.TicketOfUserModel;
 import com.Rifa.v10.Models.UserModel;
 import com.Rifa.v10.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,4 +40,7 @@ public class UserService {
         if (userModel.isEmpty()){return true;}
         return false;
     }
+
+
+    public List<TicketOfUserModel> getAllTickets()
 }

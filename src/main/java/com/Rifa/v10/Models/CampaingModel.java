@@ -13,7 +13,7 @@ import java.util.UUID;
 @Entity
 @Data
 @RequiredArgsConstructor
-public class TicketsModel {
+public class CampaingModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
