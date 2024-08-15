@@ -90,26 +90,14 @@ public class AdminService {
         return numbersGenerated;
     }
 
-
-    public List<Integer> generateNumbers(int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be positive");
+    public List<Integer> generateNumbers(int quantity){
+        List<Integer> integers = new ArrayList<>();
+        for(int i = 0; i < quantity; i++){
+            integers.add(i);
         }
+        Collections.shuffle(integers);
 
-        // Define the range for numbers
-        int maxNumber = quantity * 2;  // Assuming you want a sufficient range to ensure uniqueness
-
-        // Use a set to ensure uniqueness and efficiency
-        Set<Integer> uniqueNumbers = new HashSet<>();
-        Random random = new Random();
-
-        // Generate unique numbers until the set has the desired quantity
-        while (uniqueNumbers.size() < quantity) {
-            uniqueNumbers.add(random.nextInt(maxNumber));
-        }
-
-        // Convert the set to a list
-        return new ArrayList<>(uniqueNumbers);
+        return integers;
     }
 
 
