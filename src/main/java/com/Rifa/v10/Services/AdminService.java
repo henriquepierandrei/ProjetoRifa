@@ -18,4 +18,7 @@ public class AdminService {
     }
 
 
+    public void saveCampaing(CampaingModel model) {
+        this.campaingRepository.save(model);
+    }
 }

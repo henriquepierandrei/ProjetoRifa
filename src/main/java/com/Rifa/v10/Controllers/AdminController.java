@@ -1,13 +1,12 @@
 package com.Rifa.v10.Controllers;
 
+import com.Rifa.v10.Dtos.CreateCampaignDto;
 import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +22,18 @@ public class AdminController {
         return ResponseEntity.ok(this.adminService.findAllCampaings());
     }
 
-    @PostMapping("/create/campaign")
-    public ResponseEntity registerCampaign(){
+    @PostMapping("/register/campaign")
+    public ResponseEntity registerCampaign(@Validated @RequestBody CreateCampaignDto createCampaignDto){
+        CampaingModel model = new CampaingModel();
+
+        model.setNameAward(createCampaignDto.name());
+        model.setDescription(createCampaignDto.description());
+        model.setTicketQuantity(createCampaignDto.quantityTickets());
+        model.setOnline(createCampaignDto.isOnline());
+        model.setWinningNumbers(createCampaignDto.numbersWinning());
+        this.adminService.saveCampaing(model);
+
+        return ResponseEntity.ok("Campaing Created: ID:"+model.getId());
 
     }
 }
