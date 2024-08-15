@@ -50,7 +50,7 @@ public class AdminService {
 
         // Gera os números aleatórios
         while (numbersGenerated.size() < quantity && ticketQuantity > 0) {
-            int number = random.nextInt(quantity+1);
+            int number = random.nextInt(campaingModel.getTicketQuantity());
 
             Set<Integer> generatedNumbersSet2 = new HashSet<>(Optional.ofNullable(campaingModel.getGeneratedNumbers()).orElse(Collections.emptyList()));
 
