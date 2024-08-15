@@ -35,8 +35,11 @@ public class AdminController {
         model.setTicketQuantity(createCampaignDto.quantityTickets());
         model.setOnline(createCampaignDto.isOnline());
         model.setWinningNumbers(createCampaignDto.numbersWinning());
-        model.setGeneratedNumbers(this.adminService.generateNumbers(createCampaignDto.quantityTickets()));
 
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+
+        model.setGeneratedNumbers(list);
         this.adminService.saveCampaing(model);
 
         return ResponseEntity.ok("Campaing Created: ID: "+model.getId());
