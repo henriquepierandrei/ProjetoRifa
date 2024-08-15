@@ -30,7 +30,7 @@ public class CampaingModel {
     private List<Long> idUsersBuyers;
 
 
-    private boolean isOnline=false;
+    private boolean isOnline;
 
 
     private List<Integer> generatedNumbers;

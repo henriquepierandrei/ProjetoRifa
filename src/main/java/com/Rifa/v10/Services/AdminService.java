@@ -16,4 +16,6 @@ public class AdminService {
     public List<CampaingModel> findAllCampaings() {
         return this.campaingRepository.findAll();
     }
+
+
 }
