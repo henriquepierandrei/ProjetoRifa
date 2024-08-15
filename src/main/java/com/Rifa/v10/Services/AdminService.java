@@ -37,21 +37,8 @@ public class AdminService {
         CampaingModel campaingModel = campaingModelOptional.get();
         int ticketQuantity = campaingModel.getTicketQuantity();
 
-        // Define 'n' based on ticket quantity
-        int n;
-        if (ticketQuantity <= 100) {
-            n = 100;
-        } else if (ticketQuantity <= 1000) {
-            n = 1000;
-        } else if (ticketQuantity <= 10000) {
-            n = 10000;
-        } else if (ticketQuantity <= 100000) {
-            n = 100000;
-        } else if (ticketQuantity <= 1000000) {
-            n = 1000000;
-        } else {
-            throw new IllegalArgumentException("Unsupported ticket quantity: " + ticketQuantity);
-        }
+
+
 
         // Initialize generated numbers list and set
         List<Integer> numbersGenerated = new ArrayList<>();
@@ -59,15 +46,27 @@ public class AdminService {
         Random random = new Random();
 
         while (numbersGenerated.size() < quantity) {
-            int number = random.nextInt(n);
+            int number = random.nextInt(ticketQuantity);
             if (!generatedNumbersSet.contains(number) && !numbersGenerated.contains(number)) {
                 numbersGenerated.add(number);
             }
+            System.out.println("Repeated!");
         }
 
         // Update campaign model
         campaingModel.setTicketQuantity(ticketQuantity - quantity);
+
+        List<Integer> num = campaingModel.getGeneratedNumbers();
+
+
+
+
+        for(Integer n : numbersGenerated){
+            num.add(n);
+        }
+
         campaingModel.setGeneratedNumbers(numbersGenerated);
+        campaingModel.setGeneratedNumbers(num);
         this.campaingRepository.save(campaingModel);
 
         // Update ticket of user
@@ -89,6 +88,28 @@ public class AdminService {
         }
 
         return numbersGenerated;
+    }
+
+
+    public List<Integer> generateNumbers(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+
+        // Define the range for numbers
+        int maxNumber = quantity * 2;  // Assuming you want a sufficient range to ensure uniqueness
+
+        // Use a set to ensure uniqueness and efficiency
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        Random random = new Random();
+
+        // Generate unique numbers until the set has the desired quantity
+        while (uniqueNumbers.size() < quantity) {
+            uniqueNumbers.add(random.nextInt(maxNumber));
+        }
+
+        // Convert the set to a list
+        return new ArrayList<>(uniqueNumbers);
     }
 
 
