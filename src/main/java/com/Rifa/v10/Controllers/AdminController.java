@@ -1,10 +1,13 @@
 package com.Rifa.v10.Controllers;
 
+import com.Rifa.v10.Dtos.BuyTicketDto;
 import com.Rifa.v10.Dtos.CreateCampaignDto;
 import com.Rifa.v10.Models.CampaingModel;
+import com.Rifa.v10.Models.UserModel;
 import com.Rifa.v10.Services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +36,12 @@ public class AdminController {
         model.setWinningNumbers(createCampaignDto.numbersWinning());
         this.adminService.saveCampaing(model);
 
-        return ResponseEntity.ok("Campaing Created: ID:"+model.getId());
+        return ResponseEntity.ok("Campaing Created: ID: "+model.getId());
 
+    }
+
+    @PostMapping("/buy")
+    public ResponseEntity buyTickets(@RequestBody BuyTicketDto buyTicketDto, @AuthenticationPrincipal UserModel userModel){
+        return ResponseEntity.ok(this.adminService.generateTicket(buyTicketDto.id(), buyTicketDto.quantity(), userModel.getId()));
     }
 }

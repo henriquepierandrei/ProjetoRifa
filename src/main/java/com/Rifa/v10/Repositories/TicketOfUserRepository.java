@@ -4,9 +4,13 @@ import com.Rifa.v10.Models.TicketOfUserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface TicketOfUserRepository extends JpaRepository<TicketOfUserModel,Long> {
     List<TicketOfUserModel> findByIdUser(long id);
 
-    TicketOfUserModel findByIdAndIdCampaign(long id, long idCampaing);
+    Optional<TicketOfUserModel> findByIdUserAndIdCampaign(long id, UUID uuid);
+
+    TicketOfUserModel findByIdAndIdCampaign(long id, UUID idCampaing);
 }

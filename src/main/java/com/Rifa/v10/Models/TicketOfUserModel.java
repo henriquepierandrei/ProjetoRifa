@@ -21,7 +21,7 @@ public class TicketOfUserModel {
 
     private List<Integer> numbersOfUser;
 
-    private long idCampaign;
+    private UUID idCampaign;
 
     private long idUser;
 }

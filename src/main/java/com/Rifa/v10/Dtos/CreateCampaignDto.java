@@ -5,5 +5,5 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record CreateCampaignDto(@NotEmpty String name, @NotEmpty String description, @NotNull boolean isOnline, @NotEmpty int quantityTickets, @NotEmpty List<Integer> numbersWinning) {
+public record CreateCampaignDto(@NotEmpty String name, @NotEmpty String description, @NotNull boolean isOnline, @NotNull int quantityTickets, @NotNull List<Integer> numbersWinning) {
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/ticket")
-    public ResponseEntity<TicketOfUserModel> getAllTickets(@AuthenticationPrincipal UserModel userModel, @RequestParam(value = "idCampaign") long idCampaign){
+    public ResponseEntity<TicketOfUserModel> getAllTickets(@AuthenticationPrincipal UserModel userModel, @RequestParam(value = "idCampaign") UUID idCampaign){
         return ResponseEntity.status(HttpStatus.FOUND).body(this.userService.getTicketsId(userModel.getId(), idCampaign));
     }
 }
