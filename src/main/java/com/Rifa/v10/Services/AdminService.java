@@ -37,35 +37,36 @@ public class AdminService {
         CampaingModel campaingModel = campaingModelOptional.get();
         int ticketQuantity = campaingModel.getTicketQuantity();
 
-
-
-
-        // Initialize generated numbers list and set
-        List<Integer> numbersGenerated = new ArrayList<>();
-        Set<Integer> generatedNumbersSet = new HashSet<>(Optional.ofNullable(campaingModel.getGeneratedNumbers()).orElse(Collections.emptyList()));
-        Random random = new Random();
-
-        while (numbersGenerated.size() < quantity) {
-            int number = random.nextInt(ticketQuantity);
-            if (!generatedNumbersSet.contains(number) && !numbersGenerated.contains(number)) {
-                numbersGenerated.add(number);
-            }
-            System.out.println("Repeated!");
-        }
-
-        // Update campaign model
         campaingModel.setTicketQuantity(ticketQuantity - quantity);
+
+
+//        // Initialize generated numbers list and set
+//        List<Integer> numbersGenerated = new ArrayList<>();
+//        Set<Integer> generatedNumbersSet = new HashSet<>(Optional.ofNullable(campaingModel.getGeneratedNumbers()).orElse(Collections.emptyList()));
+//        Random random = new Random();
+//
+//        while (numbersGenerated.size() < quantity) {
+//            int number = random.nextInt(ticketQuantity);
+//            if (!generatedNumbersSet.contains(number) && !numbersGenerated.contains(number)) {
+//                numbersGenerated.add(number);
+//            }
+//            System.out.println("Repeated!");
+//        }
 
         List<Integer> num = campaingModel.getGeneratedNumbers();
 
-
-
-
-        for(Integer n : numbersGenerated){
-            num.add(n);
+        List<Integer> numUser = new ArrayList<>();
+        for(int i = 0; i < quantity; i++){
+            numUser.add(num.get(i));
+            num.remove(i);
         }
 
-        campaingModel.setGeneratedNumbers(numbersGenerated);
+
+
+
+
+
+
         campaingModel.setGeneratedNumbers(num);
         this.campaingRepository.save(campaingModel);
 
@@ -74,20 +75,28 @@ public class AdminService {
         if (ticketOfUserModel.isPresent()) {
             TicketOfUserModel userTicket = ticketOfUserModel.get();
             List<Integer> numberOfUser = new ArrayList<>(userTicket.getNumbersOfUser());
-            numberOfUser.addAll(numbersGenerated);
+
+            for(Integer numbers : numUser){
+                numberOfUser.add(numbers);
+            }
+
             userTicket.setNumbersOfUser(numberOfUser);
             userTicket.setIdCampaign(id);
+            userTicket.setNumbersOfUser(numUser);
             this.ticketOfUserRepository.save(userTicket);
         } else {
             // Create a new ticket of user if it does not exist
             TicketOfUserModel newTicket = new TicketOfUserModel();
             newTicket.setIdUser(idUser);
             newTicket.setIdCampaign(id);
-            newTicket.setNumbersOfUser(numbersGenerated);
+
+
+            //
+
             this.ticketOfUserRepository.save(newTicket);
         }
 
-        return numbersGenerated;
+        return null;
     }
 
     public List<Integer> generateNumbers(int quantity){
