@@ -42,6 +42,10 @@ public class AdminController {
         List<Integer> list = new ArrayList<>();
         list.add(null);
 
+
+        model.setIdUsersBuyers(new ArrayList<>());
+
+
         model.setGeneratedNumbers(list);
         this.adminService.saveCampaing(model);
 

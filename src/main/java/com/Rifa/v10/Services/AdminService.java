@@ -7,7 +7,6 @@ import com.Rifa.v10.Repositories.CampaingRepository;
 import com.Rifa.v10.Repositories.TicketOfUserRepository;
 import com.Rifa.v10.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -48,9 +47,16 @@ public class AdminService {
         List<Long> idUsers = campaingModelOptional.get().getIdUsersBuyers();
         List<UserModel> userWinner = new ArrayList<>();
 
+        System.out.println(idUsers);
+
         for(int i = 0; i < idUsers.size(); i++){
-            TicketOfUserModel ticketOfUserModel = (TicketOfUserModel) this.ticketOfUserRepository.findByIdUser(idUsers.get(i));
-            for(Integer n : ticketOfUserModel.getNumbersOfUser()){
+            Optional<TicketOfUserModel> ticketOfUserModel = this.ticketOfUserRepository.findByIdUserAndIdCampaign(idUsers.get(i),id);
+            if (ticketOfUserModel.isEmpty()){
+                return Collections.emptyList();
+            }
+
+            for(Integer n : ticketOfUserModel.get().getNumbersOfUser()){
+                System.out.println(">> "+n);
                 if (campaingModelOptional.get().getWinningNumbers().contains(n)){
                     Optional<UserModel> userModel = this.userRepository.findById(idUsers.get(i));
                     userWinner.add(userModel.get());
