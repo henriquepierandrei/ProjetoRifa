@@ -173,6 +173,10 @@ public class UserService {
         // Atualiza a quantidade de tickets disponíveis na campanha
         campaingModel.setTicketQuantity(ticketQuantity);
 
+        List<Long> idBuyers = campaingModel.getIdUsersBuyers();
+        idBuyers.add(idUser);
+        campaingModel.setIdUsersBuyers(idBuyers);
+
         // Atualiza a lista de números gerados na campanha
         List<Integer> generatedNumbers = campaingModel.getGeneratedNumbers();
         if (generatedNumbers == null) {

@@ -6,6 +6,7 @@ import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.UserModel;
 import com.Rifa.v10.Services.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/admin")
@@ -45,6 +47,13 @@ public class AdminController {
 
         return ResponseEntity.ok("Campaing Created: ID: "+model.getId());
 
+    }
+
+    @GetMapping("/campaign")
+    public ResponseEntity getUserByNumersWinner(@RequestParam(value = "idCampaign") UUID idCampaign){
+        List<UserModel> userModels = this.adminService.getUserByCampaign(idCampaign);
+        if (userModels.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found!");}
+        return ResponseEntity.status(HttpStatus.FOUND).body(userModels);
     }
 
 }

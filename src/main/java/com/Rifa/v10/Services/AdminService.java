@@ -2,8 +2,10 @@ package com.Rifa.v10.Services;
 
 import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.TicketOfUserModel;
+import com.Rifa.v10.Models.UserModel;
 import com.Rifa.v10.Repositories.CampaingRepository;
 import com.Rifa.v10.Repositories.TicketOfUserRepository;
+import com.Rifa.v10.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.*;
 public class AdminService {
     @Autowired private CampaingRepository campaingRepository;
     @Autowired private TicketOfUserRepository ticketOfUserRepository;
+    @Autowired private UserRepository userRepository;
 
 
 
@@ -26,11 +29,6 @@ public class AdminService {
         this.campaingRepository.save(model);
     }
 
-
-
-
-
-
     public List<Integer> generateNumbers(int quantity){
         List<Integer> integers = new ArrayList<>();
         for(int i = 0; i < quantity; i++){
@@ -41,7 +39,28 @@ public class AdminService {
         return integers;
     }
 
+    public List<UserModel> getUserByCampaign(UUID id){
+        Optional<CampaingModel> campaingModelOptional = this.campaingRepository.findById(id);
 
+        System.out.println(campaingModelOptional.get());
+        if (campaingModelOptional.isEmpty()){return Collections.emptyList();}
+
+        List<Long> idUsers = campaingModelOptional.get().getIdUsersBuyers();
+        List<UserModel> userWinner = new ArrayList<>();
+
+        for(int i = 0; i < idUsers.size(); i++){
+            TicketOfUserModel ticketOfUserModel = (TicketOfUserModel) this.ticketOfUserRepository.findByIdUser(idUsers.get(i));
+            for(Integer n : ticketOfUserModel.getNumbersOfUser()){
+                if (campaingModelOptional.get().getWinningNumbers().contains(n)){
+                    Optional<UserModel> userModel = this.userRepository.findById(idUsers.get(i));
+                    userWinner.add(userModel.get());
+                }
+
+            }
+        }
+        return userWinner;
+
+    }
 
 //    public List<Integer> generateTicket(UUID id, int quantity, long idUser){
 //        Optional<CampaingModel> campaingModelOptional = this.campaingRepository.findById(id);
