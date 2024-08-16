@@ -34,6 +34,8 @@ public class UserController {
 
     @PostMapping("/buy")
     public ResponseEntity buyTickets(@RequestBody BuyTicketDto buyTicketDto, @AuthenticationPrincipal UserModel userModel){
-        return ResponseEntity.ok(this.userService.generateTicket(buyTicketDto.id(), buyTicketDto.quantity(), userModel.getId()));
+        List<Integer> integers = this.userService.generateTicket(buyTicketDto.id(), buyTicketDto.quantity(), userModel.getId());
+        if (integers.isEmpty()){return ResponseEntity.badRequest().build();}
+        return ResponseEntity.ok(integers);
     }
 }

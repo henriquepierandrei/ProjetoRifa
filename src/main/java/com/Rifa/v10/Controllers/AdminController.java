@@ -32,12 +32,13 @@ public class AdminController {
 
         model.setNameAward(createCampaignDto.name());
         model.setDescription(createCampaignDto.description());
-        model.setTicketQuantity(createCampaignDto.quantityTickets());
+        model.setTicketQuantity(createCampaignDto.quantityTickets()+1);
         model.setOnline(createCampaignDto.isOnline());
         model.setWinningNumbers(createCampaignDto.numbersWinning());
+        model.setInicialQuantity(createCampaignDto.quantityTickets());
 
         List<Integer> list = new ArrayList<>();
-        list.add(0);
+        list.add(null);
 
         model.setGeneratedNumbers(list);
         this.adminService.saveCampaing(model);
@@ -46,8 +47,4 @@ public class AdminController {
 
     }
 
-    @PostMapping("/buy")
-    public ResponseEntity buyTickets(@RequestBody BuyTicketDto buyTicketDto, @AuthenticationPrincipal UserModel userModel){
-        return ResponseEntity.ok(this.adminService.generateTicket(buyTicketDto.id(), buyTicketDto.quantity(), userModel.getId()));
-    }
 }

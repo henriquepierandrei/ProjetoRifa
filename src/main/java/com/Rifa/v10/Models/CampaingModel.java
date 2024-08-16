@@ -27,6 +27,8 @@ public class CampaingModel {
     private List<Integer> winningNumbers;
     private int ticketQuantity;
 
+    private int inicialQuantity;
+
 
     private List<Long> idUsersBuyers;
 
