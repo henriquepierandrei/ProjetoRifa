@@ -7,6 +7,7 @@ import com.Rifa.v10.Repositories.CampaingRepository;
 import com.Rifa.v10.Repositories.TicketOfUserRepository;
 import com.Rifa.v10.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -134,6 +135,7 @@ public class UserService {
         Optional<CampaingModel> campaingModelOptional = this.campaingRepository.findById(id);
         if (campaingModelOptional.isEmpty()) {
             throw new NoSuchElementException("Campaign not found");
+
         }
 
         if (campaingModelOptional.get().getTicketQuantity()==1 || !campaingModelOptional.get().isOnline()){
@@ -204,5 +206,7 @@ public class UserService {
     }
 
 
-
+    public Optional<CampaingModel> findCampaignById(UUID id) {
+        return this.campaingRepository.findById(id);
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -34,6 +35,8 @@ public class UserController {
 
     @PostMapping("/buy")
     public ResponseEntity buyTickets(@RequestBody BuyTicketDto buyTicketDto, @AuthenticationPrincipal UserModel userModel){
+        Optional<CampaingModel> campaingModelOptional = this.userService.findCampaignById(buyTicketDto.id());
+        if (campaingModelOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Campaign Not Found!");}
         List<Integer> integers = this.userService.generateTicket(buyTicketDto.id(), buyTicketDto.quantity(), userModel.getId());
         if (integers.isEmpty()){return ResponseEntity.badRequest().build();}
         return ResponseEntity.ok(integers);
