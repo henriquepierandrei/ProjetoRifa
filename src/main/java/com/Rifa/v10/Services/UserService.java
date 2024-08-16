@@ -7,7 +7,6 @@ import com.Rifa.v10.Repositories.CampaingRepository;
 import com.Rifa.v10.Repositories.TicketOfUserRepository;
 import com.Rifa.v10.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -53,8 +52,9 @@ public class UserService {
 
     }
 
-    public TicketOfUserModel getTicketsId(long id, UUID idCampaing) {
-        return this.ticketOfUserRepository.findByIdAndIdCampaign(id,idCampaing);
+    public List<Integer> getTicketsId(long id, UUID idCampaing) {
+        Optional<TicketOfUserModel> ticketOfUserModel = this.ticketOfUserRepository.findByIdUserAndIdCampaign(id,idCampaing);
+        return ticketOfUserModel.get().getNumbersOfUser();
     }
 
 //    public List<Integer> generateTicket(UUID id, int quantity, long idUser) {

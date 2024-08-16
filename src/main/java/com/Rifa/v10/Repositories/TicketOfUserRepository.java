@@ -12,5 +12,5 @@ public interface TicketOfUserRepository extends JpaRepository<TicketOfUserModel,
 
     Optional<TicketOfUserModel> findByIdUserAndIdCampaign(long id, UUID uuid);
 
-    TicketOfUserModel findByIdAndIdCampaign(long id, UUID idCampaing);
+    List<TicketOfUserModel> findByIdAndIdCampaign(long id, UUID idCampaing);
 }

@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/ticket")
-    public ResponseEntity<TicketOfUserModel> getAllTickets(@AuthenticationPrincipal UserModel userModel, @RequestParam(value = "idCampaign") UUID idCampaign){
+    public ResponseEntity<List<Integer>> getAllTickets(@AuthenticationPrincipal UserModel userModel, @RequestParam(value = "idCampaign") UUID idCampaign){
         return ResponseEntity.status(HttpStatus.FOUND).body(this.userService.getTicketsId(userModel.getId(), idCampaign));
     }
 
