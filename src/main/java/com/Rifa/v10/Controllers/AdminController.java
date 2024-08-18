@@ -33,7 +33,7 @@ public class AdminController {
     }
 
     @PostMapping("/register/campaign")
-    public ResponseEntity registerCampaign(@Validated @RequestBody CreateCampaignDto createCampaignDto){
+    public ResponseEntity createCampaign(@Validated @RequestBody CreateCampaignDto createCampaignDto){
         CampaingModel model = new CampaingModel();
 
         model.setNameAward(createCampaignDto.name());
@@ -58,7 +58,7 @@ public class AdminController {
     }
 
     @GetMapping("/winners")
-    public ResponseEntity<?> getUserByNumersWinner(@RequestParam(value = "idCampaign") UUID idCampaign) {
+    public ResponseEntity<?> getUserForNumersWinner(@RequestParam(value = "idCampaign") UUID idCampaign) {
         List<UserModel> userModels = this.adminService.getUserByCampaign(idCampaign);
 
         if (userModels.isEmpty()) {
@@ -78,6 +78,8 @@ public class AdminController {
 
         return ResponseEntity.status(HttpStatus.OK).body(responseWinnersDtos);
     }
+
+    
 
 
 
