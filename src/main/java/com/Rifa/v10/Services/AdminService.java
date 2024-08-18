@@ -47,6 +47,8 @@ public class AdminService {
         List<Long> idUsers = campaingModelOptional.get().getIdUsersBuyers();
         List<UserModel> userWinner = new ArrayList<>();
 
+
+
         System.out.println(idUsers);
 
         for(int i = 0; i < idUsers.size(); i++){
@@ -60,13 +62,43 @@ public class AdminService {
                 if (campaingModelOptional.get().getWinningNumbers().contains(n)){
                     Optional<UserModel> userModel = this.userRepository.findById(idUsers.get(i));
                     userWinner.add(userModel.get());
+
+
                 }
 
             }
         }
+
+
         return userWinner;
 
     }
+
+    public List<Object> numberWinnerUser(UUID idCampaign, long idUser) {
+        Optional<CampaingModel> model = this.campaingRepository.findById(idCampaign);
+
+        List<Object> objects = new ArrayList<>();
+
+        if (model.isPresent()) {
+            List<Integer> numbersWinners = model.get().getWinningNumbers();
+
+            Optional<TicketOfUserModel> userModel = this.ticketOfUserRepository.findByIdUserAndIdCampaign(idUser, idCampaign);
+
+            if (userModel.isPresent()) {
+                for (Integer userNumber : userModel.get().getNumbersOfUser()) {
+                    if (numbersWinners.contains(userNumber)) {
+                        objects.add(userNumber);
+                    }
+                }
+            }
+        }
+
+        return objects;
+    }
+
+
+
+}
 
 //    public List<Integer> generateTicket(UUID id, int quantity, long idUser){
 //        Optional<CampaingModel> campaingModelOptional = this.campaingRepository.findById(id);
@@ -126,4 +158,4 @@ public class AdminService {
 //        return numbers;
 //
 //    }
-}
+

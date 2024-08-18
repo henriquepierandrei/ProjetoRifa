@@ -2,9 +2,12 @@ package com.Rifa.v10.Controllers;
 
 import com.Rifa.v10.Dtos.BuyTicketDto;
 import com.Rifa.v10.Dtos.CreateCampaignDto;
+import com.Rifa.v10.Dtos.ResponseRegisterDto;
+import com.Rifa.v10.Dtos.ResponseWinnersDto;
 import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.UserModel;
 import com.Rifa.v10.Services.AdminService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin")
@@ -53,11 +57,29 @@ public class AdminController {
 
     }
 
-    @GetMapping("/campaign")
-    public ResponseEntity getUserByNumersWinner(@RequestParam(value = "idCampaign") UUID idCampaign){
+    @GetMapping("/winners")
+    public ResponseEntity<?> getUserByNumersWinner(@RequestParam(value = "idCampaign") UUID idCampaign) {
         List<UserModel> userModels = this.adminService.getUserByCampaign(idCampaign);
-        if (userModels.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found!");}
-        return ResponseEntity.status(HttpStatus.FOUND).body(userModels);
+
+        if (userModels.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No winners found for the campaign with ID: " + idCampaign);
+        }
+
+        // Converte cada UserModel para ResponseWinnersDto
+        List<ResponseWinnersDto> responseWinnersDtos = userModels.stream().map(user ->
+                new ResponseWinnersDto(
+                        user.getName(),
+                        user.getLastName(),
+                        user.getPhone(),
+                        user.getCpf(),
+                        this.adminService.numberWinnerUser(idCampaign, user.getId())  // Passando o ID do usuário
+                )
+        ).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseWinnersDtos);
     }
+
+
+
 
 }
