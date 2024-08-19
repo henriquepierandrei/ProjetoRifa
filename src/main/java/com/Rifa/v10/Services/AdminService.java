@@ -121,6 +121,10 @@ public class AdminService {
         return "Campaign not found!";
     }
 
+    public Optional<CampaingModel> getCampaign(UUID id){
+        return this.campaingRepository.findById(id);
+    }
+
 
 
 

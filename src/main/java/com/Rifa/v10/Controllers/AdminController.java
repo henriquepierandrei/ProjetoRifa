@@ -7,6 +7,7 @@ import com.Rifa.v10.Dtos.ResponseWinnersDto;
 import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.UserModel;
 import com.Rifa.v10.Services.AdminService;
+import com.Rifa.v10.Services.EmailService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminController {
     private final AdminService adminService;
+    private final EmailService emailService;
 
 
     @GetMapping("/campaings")
@@ -61,20 +64,32 @@ public class AdminController {
     public ResponseEntity<?> getUserForNumersWinner(@RequestParam(value = "idCampaign") UUID idCampaign) {
         List<UserModel> userModels = this.adminService.getUserByCampaign(idCampaign);
 
+        Optional<CampaingModel> model = this.adminService.getCampaign(idCampaign);
+
+
         if (userModels.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No winners found for the campaign with ID: " + idCampaign);
         }
 
-        // Converte cada UserModel para ResponseWinnersDto
+
         List<ResponseWinnersDto> responseWinnersDtos = userModels.stream().map(user ->
                 new ResponseWinnersDto(
                         user.getName(),
                         user.getLastName(),
                         user.getPhone(),
                         user.getCpf(),
-                        this.adminService.numberWinnerUser(idCampaign, user.getId())  // Passando o ID do usuário
+                        this.adminService.numberWinnerUser(idCampaign, user.getId())
                 )
         ).collect(Collectors.toList());
+
+
+        userModels.forEach(user2 ->
+                this.emailService.sendEmail(user2.getEmail(), model.get(), user2, idCampaign)
+        );
+
+
+
+
 
         return ResponseEntity.status(HttpStatus.OK).body(responseWinnersDtos);
     }
@@ -89,6 +104,8 @@ public class AdminController {
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+
 
 
 
