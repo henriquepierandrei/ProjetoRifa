@@ -101,6 +101,7 @@ public class AdminController {
         if (result instanceof String && result.equals("Campaign not found!")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
+        System.out.println(result);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
