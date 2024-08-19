@@ -41,7 +41,7 @@ public class EmailService {
                     + "<body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'>"
                     + "    <div style='background-color: #121212; width: 500px; height: auto; border-radius: 15px; margin: 50px auto; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2); padding: 20px; text-align: center;'>"
                     + "        <h1 style='color: #FFD700; font-size: 2.5em; margin-bottom: 0;'>🎉 Parabéns! 🎉</h1>"
-                    + "        <p style='color: #ffffff; font-size: 1.2em; margin-top: 0;'>Parabéns" + userModel.getName() + "você é o grande ganhador da nossa rifa!</p>"
+                    + "        <p style='color: #ffffff; font-size: 1.2em; margin-top: 0;'>Parabéns " + userModel.getName() + ", você é o grande ganhador da nossa rifa!</p>"
                     + "        <div style='background-color: #fff; border-radius: 10px; padding: 10px; margin-top: 20px; text-align: start;'>"
                     + "            <h2 style='color: #333;'>🏆 Prêmio: <strong>" + model.getNameAward() + "</strong></h2>"
                     + "            <h2 style='color: #333;'>🎟️ Número Vencedor: <strong>" + this.adminService.numberWinnerUser(idCampaign, userModel.getId()) + "</strong></h2>"
