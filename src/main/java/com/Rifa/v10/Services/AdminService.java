@@ -6,6 +6,7 @@ import com.Rifa.v10.Models.UserModel;
 import com.Rifa.v10.Repositories.CampaingRepository;
 import com.Rifa.v10.Repositories.TicketOfUserRepository;
 import com.Rifa.v10.Repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,6 +96,32 @@ public class AdminService {
 
         return objects;
     }
+
+    @Transactional
+    public Object changeTheStatus(UUID idCampaign) {
+        Optional<CampaingModel> model = this.campaingRepository.findById(idCampaign);
+
+        if (model.isPresent()) {
+            CampaingModel campaing = model.get();
+
+            boolean isOnline = !campaing.isOnline();
+
+
+
+            campaing.setOnline(isOnline);
+
+            System.out.println(">>>"+isOnline);
+            this.campaingRepository.save(campaing);
+
+
+
+            return campaing;
+        }
+
+        return "Campaign not found!";
+    }
+
+
 
 
 

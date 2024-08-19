@@ -79,7 +79,19 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(responseWinnersDtos);
     }
 
-    
+    @PutMapping("/update/status")
+    public ResponseEntity<Object> updateStatusByIdCampaign(@RequestParam(value = "idCampaign") UUID idCampaign) {
+        Object result = this.adminService.changeTheStatus(idCampaign);
+
+        if (result instanceof String && result.equals("Campaign not found!")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+
+
 
 
 
