@@ -85,7 +85,7 @@ public class AdminController {
         List<UserModel> userModels = this.adminService.getUserByCampaign(idCampaign);
 
         Optional<CampaingModel> model = this.adminService.getCampaign(idCampaign);
-        
+
         if (userModels.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No winners found for the campaign with ID: " + idCampaign);
         }
@@ -105,10 +105,7 @@ public class AdminController {
         userModels.forEach(user2 ->
                 this.emailService.sendEmail(user2.getEmail(), model.get(), user2, idCampaign)
         );
-
-
-
-
+        
 
         return ResponseEntity.status(HttpStatus.OK).body(responseWinnersDtos);
     }
