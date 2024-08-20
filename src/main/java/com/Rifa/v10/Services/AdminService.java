@@ -132,14 +132,14 @@ public class AdminService {
         this.campaingRepository.deleteById(idCampaign);
     }
 
-    public List<Object> repeortAllCampaign(){
+    public List<Object> reportAllCampaign(){
         List<CampaingModel> campaingModels = this.campaingRepository.findByIsOnline(true);
 
         if (!campaingModels.isEmpty()){
             List<ReportCampaignDto> reportCampaignDtos = new ArrayList<>();
 
             for (CampaingModel model : campaingModels){
-                ReportCampaignDto reportCampaignDto = new ReportCampaignDto(model,model.getTicketQuantity()-1, model.getIdUsersBuyers().size());
+                ReportCampaignDto reportCampaignDto = new ReportCampaignDto(model,model.getTicketQuantity(), model.getIdUsersBuyers().size());
                 reportCampaignDtos.add(reportCampaignDto);
             }
 
@@ -148,6 +148,18 @@ public class AdminService {
         return null;
 
 
+    }
+
+    public Object reportCampaign(UUID uuid){
+        Optional<CampaingModel> campaingModel = this.campaingRepository.findById(uuid);
+
+        if (!campaingModel.isEmpty()){
+            ReportCampaignDto reportCampaignDto = new ReportCampaignDto(campaingModel.get(),campaingModel.get().getTicketQuantity(), campaingModel.get().getIdUsersBuyers().size());
+
+            return reportCampaignDto;
+        }
+
+        return null;
     }
 }
 

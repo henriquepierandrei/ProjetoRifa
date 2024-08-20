@@ -44,19 +44,14 @@ public class AdminController {
 
         model.setNameAward(createCampaignDto.name());
         model.setDescription(createCampaignDto.description());
-        model.setTicketQuantity(createCampaignDto.quantityTickets()+1);
+        model.setTicketQuantity(createCampaignDto.quantityTickets());
         model.setOnline(createCampaignDto.isOnline());
         model.setWinningNumbers(createCampaignDto.numbersWinning());
         model.setInicialQuantity(createCampaignDto.quantityTickets());
-
-        List<Integer> list = new ArrayList<>();
-        list.add(null);
-
-
         model.setIdUsersBuyers(new ArrayList<>());
+        model.setGeneratedNumbers(new ArrayList<>());
 
 
-        model.setGeneratedNumbers(list);
         this.adminService.saveCampaing(model);
 
         return ResponseEntity.ok("Campaing Created: ID: "+model.getId());
@@ -128,9 +123,21 @@ public class AdminController {
 
 
     // Report about all campaigns
-    @GetMapping("/report")
+    @GetMapping("/reports")
     public ResponseEntity<?> reportAllCampaign(){
-        return ResponseEntity.status(HttpStatus.OK).body(this.adminService.repeortAllCampaign());
+        if (this.adminService.reportAllCampaign()==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no online campaigns!");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(this.adminService.reportAllCampaign());
+    }
+
+    // Report about campaign by id
+    @GetMapping("/report")
+    public ResponseEntity<?> reportCampaignById(@RequestParam(value = "idCampaign") UUID idCampaign){
+        if (this.adminService.reportCampaign(idCampaign)==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no online campaigns or non-existent campaigns!");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(this.adminService.reportAllCampaign());
     }
 
 
