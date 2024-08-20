@@ -127,6 +127,13 @@ public class AdminController {
     }
 
 
+    // Report about all campaigns
+    @GetMapping("/report")
+    public ResponseEntity<?> reportAllCampaign(){
+        return ResponseEntity.status(HttpStatus.OK).body(this.adminService.repeortAllCampaign());
+    }
+
+
 
 
 

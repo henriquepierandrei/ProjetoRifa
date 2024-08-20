@@ -1,5 +1,6 @@
 package com.Rifa.v10.Services;
 
+import com.Rifa.v10.Dtos.ReportCampaignDto;
 import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.TicketOfUserModel;
 import com.Rifa.v10.Models.UserModel;
@@ -129,6 +130,24 @@ public class AdminService {
     public void deleteCampaign(UUID idCampaign) {
         this.ticketOfUserRepository.deleteByIdCampaign(idCampaign);
         this.campaingRepository.deleteById(idCampaign);
+    }
+
+    public List<Object> repeortAllCampaign(){
+        List<CampaingModel> campaingModels = this.campaingRepository.findByIsOnline(true);
+
+        if (!campaingModels.isEmpty()){
+            List<ReportCampaignDto> reportCampaignDtos = new ArrayList<>();
+
+            for (CampaingModel model : campaingModels){
+                ReportCampaignDto reportCampaignDto = new ReportCampaignDto(model,model.getTicketQuantity()-1, model.getIdUsersBuyers().size());
+                reportCampaignDtos.add(reportCampaignDto);
+            }
+
+            return Collections.singletonList(reportCampaignDtos);
+        }
+        return null;
+
+
     }
 }
 
