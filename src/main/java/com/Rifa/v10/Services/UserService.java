@@ -203,7 +203,7 @@ public class UserService {
             this.ticketOfUserRepository.save(newTicket);
         }
 
-       
+
         return numbersGenerated;
     }
 
