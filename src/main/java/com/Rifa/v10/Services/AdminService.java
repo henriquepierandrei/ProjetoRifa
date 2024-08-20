@@ -125,10 +125,11 @@ public class AdminService {
         return this.campaingRepository.findById(id);
     }
 
-
-
-
-
+    @Transactional
+    public void deleteCampaign(UUID idCampaign) {
+        this.ticketOfUserRepository.deleteByIdCampaign(idCampaign);
+        this.campaingRepository.deleteById(idCampaign);
+    }
 }
 
 //    public List<Integer> generateTicket(UUID id, int quantity, long idUser){

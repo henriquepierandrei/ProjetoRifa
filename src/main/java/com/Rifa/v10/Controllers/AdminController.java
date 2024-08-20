@@ -114,6 +114,17 @@ public class AdminController {
     }
 
 
+    @DeleteMapping("/delete/campaign")
+    public ResponseEntity<String> deleteCampaign(@RequestParam(value = "idCampaign") UUID idCampaign){
+        Optional<CampaingModel> model = this.adminService.getCampaign(idCampaign);
+        if (model.isPresent()){
+            this.adminService.deleteCampaign(idCampaign);
+            return ResponseEntity.status(HttpStatus.OK).body("Campaign ID: [ "+idCampaign+" ], was removed!");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Campaign ID: [ "+idCampaign+" ], not exists!");
+
+    }
+
 
 
 
