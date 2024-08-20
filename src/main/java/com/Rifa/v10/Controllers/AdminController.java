@@ -57,14 +57,26 @@ public class AdminController {
 
     // Update Campaign
     @PutMapping("/update/campaign")
-    public ResponseEntity<?> updateCampaign(@RequestParam(value = "idCampaign") UUID idCampaign, UpdateCampaignDto updateCampaignDto){
+    public ResponseEntity<?> updateCampaign(@RequestParam(value = "idCampaign") UUID idCampaign, @RequestBody UpdateCampaignDto updateCampaignDto){
         Optional<CampaingModel> campaingModelOptional = this.adminService.getCampaign(idCampaign);
         if (campaingModelOptional.isPresent()){
-            campaingModelOptional.get().setNameAward(updateCampaignDto.name());
-            campaingModelOptional.get().setDescription(updateCampaignDto.description());
+            campaingModelOptional.get().setNameAward(campaingModelOptional.get().getNameAward());
+            campaingModelOptional.get().setDescription(campaingModelOptional.get().getDescription());
+
+
+            if (updateCampaignDto.name() != null){
+                campaingModelOptional.get().setNameAward(updateCampaignDto.name());
+
+            }
+
+            if (updateCampaignDto.description() != null){
+                campaingModelOptional.get().setDescription(updateCampaignDto.description());
+            }
+
             this.adminService.saveCampaing(campaingModelOptional.get());
             return ResponseEntity.status(HttpStatus.OK).body("Updated!");
         }
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not exists!");
     }
 
