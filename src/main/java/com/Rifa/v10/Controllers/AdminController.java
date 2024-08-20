@@ -30,11 +30,14 @@ public class AdminController {
     private final EmailService emailService;
 
 
+    // List all giveaway campaigns!
     @GetMapping("/campaings")
     public ResponseEntity<List<CampaingModel>> getAllCampaings(){
         return ResponseEntity.ok(this.adminService.findAllCampaings());
     }
 
+
+    // Registers a new raffle campaign!
     @PostMapping("/register/campaign")
     public ResponseEntity createCampaign(@Validated @RequestBody CreateCampaignDto createCampaignDto){
         CampaingModel model = new CampaingModel();
@@ -60,6 +63,8 @@ public class AdminController {
 
     }
 
+
+    // List all winners by campaign ID if there is a winner and they receive an email that they won!
     @GetMapping("/winners")
     public ResponseEntity<?> getUserForNumersWinner(@RequestParam(value = "idCampaign") UUID idCampaign) {
         List<UserModel> userModels = this.adminService.getUserByCampaign(idCampaign);
@@ -94,6 +99,8 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(responseWinnersDtos);
     }
 
+
+    // Updates the campaign status, if it is online it goes offline and vice versa!
     @PutMapping("/update/status")
     public ResponseEntity<Object> updateStatusByIdCampaign(@RequestParam(value = "idCampaign") UUID idCampaign) {
         Object result = this.adminService.changeTheStatus(idCampaign);
@@ -105,6 +112,8 @@ public class AdminController {
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+
 
 
 
