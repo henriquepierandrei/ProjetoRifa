@@ -36,15 +36,15 @@ public class EmailService {
             helper.setTo(userModel.getEmail());
             helper.setSubject("Parabéns " + userModel.getName() + " " + userModel.getLastName() + ", você é ganhador da " + model.getNameAward());
 
-            // Define o conteúdo da mensagem em HTML
+            
             String htmlContent = "<html lang='pt-BR'>"
                     + "<body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'>"
-                    + "    <div style='background-color: #121212; width: 500px; height: auto; border-radius: 15px; margin: 50px auto; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2); padding: 20px; text-align: center;'>"
+                    + "    <div style='background-color: #161515; width: 500px; height: auto; border-radius: 15px; margin: 50px auto; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2); padding: 20px; text-align: center;'>"
                     + "        <h1 style='color: #FFD700; font-size: 2.5em; margin-bottom: 0;'>🎉 Parabéns! 🎉</h1>"
                     + "        <p style='color: #ffffff; font-size: 1.2em; margin-top: 0;'>Parabéns " + userModel.getName() + ", você é o grande ganhador da nossa rifa!</p>"
-                    + "        <div style='background-color: #fff; border-radius: 10px; padding: 10px; margin-top: 20px; text-align: start;'>"
-                    + "            <h2 style='color: #333;'>🏆 Prêmio: <strong>" + model.getNameAward() + "</strong></h2>"
-                    + "            <h2 style='color: #333;'>🎟️ Número Vencedor: <strong>" + this.adminService.numberWinnerUser(idCampaign, userModel.getId()) + "</strong></h2>"
+                    + "        <div style='background-color: #201a1a; border-radius: 10px; padding: 30px; margin-top: 20px; text-align: start;'>"
+                    + "            <h2 style='color: #dbd1d1; font-weight: 300; background-color: rgb(82, 74, 74); border-radius: 3px; padding: 5px 0 5px 5px; width: max-content;'>🏆 Prêmio: <strong style='background-color: #fa2121; padding: 5px; border-radius: 5px;'>" + model.getNameAward() + "</strong></h2>"
+                    + "            <h2 style='color: #dbd1d1; font-weight: 300; background-color: rgb(82, 74, 74); border-radius: 3px; padding: 5px 0 5px 5px; width: max-content;'>🎟️ Número Vencedor: <strong style='background-color: #fa2121; padding: 5px; border-radius: 5px;'>" + this.adminService.numberWinnerUser(idCampaign, userModel.getId()) + "</strong></h2>"
                     + "        </div>"
                     + "        <br><br><br><br>"
                     + "        <p style='color: #bbb; font-size: 1em;'>Nossa equipe entrará em contato com você para organizar a entrega do prêmio. "
@@ -53,6 +53,7 @@ public class EmailService {
                     + "    </div>"
                     + "</body>"
                     + "</html>";
+
 
 
 
