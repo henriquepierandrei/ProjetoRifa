@@ -66,7 +66,6 @@ public class AdminController {
 
             if (updateCampaignDto.name() != null){
                 campaingModelOptional.get().setNameAward(updateCampaignDto.name());
-
             }
 
             if (updateCampaignDto.description() != null){
