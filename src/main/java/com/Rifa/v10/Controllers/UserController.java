@@ -22,17 +22,20 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
 
-
+    // Get all tickets
     @GetMapping("/tickets")
     public ResponseEntity<List<TicketOfUserModel>> getAllTickets(@AuthenticationPrincipal UserModel userModel){
         return ResponseEntity.status(HttpStatus.FOUND).body(this.userService.getAllTickets(userModel.getId()));
     }
 
+
+    // Get tickets of campaign for id!
     @GetMapping("/ticket")
-    public ResponseEntity<List<Integer>> getAllTickets(@AuthenticationPrincipal UserModel userModel, @RequestParam(value = "idCampaign") UUID idCampaign){
+    public ResponseEntity<List<Integer>> getTicketByID(@AuthenticationPrincipal UserModel userModel, @RequestParam(value = "idCampaign") UUID idCampaign){
         return ResponseEntity.status(HttpStatus.FOUND).body(this.userService.getTicketsId(userModel.getId(), idCampaign));
     }
 
+    // Buy tickets
     @PostMapping("/buy")
     public ResponseEntity buyTickets(@RequestBody BuyTicketDto buyTicketDto, @AuthenticationPrincipal UserModel userModel){
         Optional<CampaingModel> campaingModelOptional = this.userService.findCampaignById(buyTicketDto.id());
