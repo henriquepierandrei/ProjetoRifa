@@ -75,7 +75,6 @@ public class AdminController {
             this.adminService.saveCampaing(campaingModelOptional.get());
             return ResponseEntity.status(HttpStatus.OK).body("Updated!");
         }
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not exists!");
     }
 
