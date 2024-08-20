@@ -1,9 +1,6 @@
 package com.Rifa.v10.Controllers;
 
-import com.Rifa.v10.Dtos.BuyTicketDto;
-import com.Rifa.v10.Dtos.CreateCampaignDto;
-import com.Rifa.v10.Dtos.ResponseRegisterDto;
-import com.Rifa.v10.Dtos.ResponseWinnersDto;
+import com.Rifa.v10.Dtos.*;
 import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.UserModel;
 import com.Rifa.v10.Services.AdminService;
@@ -59,7 +56,27 @@ public class AdminController {
     }
 
     // Update Campaign
-    public 
+    @PutMapping("/update/campaign")
+    public ResponseEntity<?> updateCampaign(@RequestParam(value = "idCampaign") UUID idCampaign, @RequestBody UpdateCampaignDto updateCampaignDto){
+        Optional<CampaingModel> campaingModelOptional = this.adminService.getCampaign(idCampaign);
+        if (campaingModelOptional.isPresent()){
+            campaingModelOptional.get().setNameAward(campaingModelOptional.get().getNameAward());
+            campaingModelOptional.get().setDescription(campaingModelOptional.get().getDescription());
+
+
+            if (updateCampaignDto.name() != null){
+                campaingModelOptional.get().setNameAward(updateCampaignDto.name());
+            }
+
+            if (updateCampaignDto.description() != null){
+                campaingModelOptional.get().setDescription(updateCampaignDto.description());
+            }
+
+            this.adminService.saveCampaing(campaingModelOptional.get());
+            return ResponseEntity.status(HttpStatus.OK).body("Updated!");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not exists!");
+    }
 
 
     // List all winners by campaign ID if there is a winner and they receive an email that they won!
@@ -68,8 +85,7 @@ public class AdminController {
         List<UserModel> userModels = this.adminService.getUserByCampaign(idCampaign);
 
         Optional<CampaingModel> model = this.adminService.getCampaign(idCampaign);
-
-
+        
         if (userModels.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No winners found for the campaign with ID: " + idCampaign);
         }
@@ -133,6 +149,7 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(this.adminService.reportAllCampaign());
     }
+
 
     // Report about campaign by id
     @GetMapping("/report")
