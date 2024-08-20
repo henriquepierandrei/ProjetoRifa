@@ -131,7 +131,7 @@ public class UserService {
 //    }
 
     public List<Integer> generateTicket(UUID id, int quantity, long idUser) {
-        // Verifica se a campanha existe
+
         Optional<CampaingModel> campaingModelOptional = this.campaingRepository.findById(id);
         if (campaingModelOptional.isEmpty()) {
             throw new NoSuchElementException("Campaign not found");
@@ -146,38 +146,37 @@ public class UserService {
         CampaingModel campaingModel = campaingModelOptional.get();
         int ticketQuantity = campaingModel.getTicketQuantity();
 
-        // Verifica se há tickets suficientes disponíveis
         if (ticketQuantity < quantity) {
             throw new IllegalArgumentException("Not enough tickets available in the campaign");
         }
 
-        // Inicializa a lista de números gerados e o conjunto para verificação rápida
+
         List<Integer> numbersGenerated = new ArrayList<>();
         Set<Integer> generatedNumbersSet = new HashSet<>(Optional.ofNullable(campaingModel.getGeneratedNumbers()).orElse(Collections.emptyList()));
         Random random = new Random();
 
-        // Gera os números aleatórios
+
         while (numbersGenerated.size() < quantity && ticketQuantity > 0) {
             int number = random.nextInt(campaingModel.getTicketQuantity());
 
-            // Verifica se o número já foi gerado
+
             if (!generatedNumbersSet.contains(number)) {
                 numbersGenerated.add(number);
-                generatedNumbersSet.add(number); // Adiciona o número ao conjunto para evitar duplicatas
+                generatedNumbersSet.add(number);
 
-                // Decrementa a quantidade de tickets disponíveis
+
                 ticketQuantity--;
             }
         }
 
-        // Atualiza a quantidade de tickets disponíveis na campanha
+
         campaingModel.setTicketQuantity(ticketQuantity);
 
         List<Long> idBuyers = campaingModel.getIdUsersBuyers();
         idBuyers.add(idUser);
         campaingModel.setIdUsersBuyers(idBuyers);
 
-        // Atualiza a lista de números gerados na campanha
+
         List<Integer> generatedNumbers = campaingModel.getGeneratedNumbers();
         if (generatedNumbers == null) {
             generatedNumbers = new ArrayList<>();
@@ -185,10 +184,9 @@ public class UserService {
         generatedNumbers.addAll(numbersGenerated);
         campaingModel.setGeneratedNumbers(generatedNumbers);
 
-        // Salva as alterações da campanha
+
         this.campaingRepository.save(campaingModel);
 
-        // Atualiza os tickets do usuário
         Optional<TicketOfUserModel> ticketOfUserModel = this.ticketOfUserRepository.findByIdUserAndIdCampaign(idUser, id);
         if (ticketOfUserModel.isPresent()) {
             TicketOfUserModel userTicket = ticketOfUserModel.get();
@@ -197,7 +195,7 @@ public class UserService {
             userTicket.setNumbersOfUser(numberOfUser);
             this.ticketOfUserRepository.save(userTicket);
         } else {
-            // Cria um novo ticket de usuário se ele não existir
+
             TicketOfUserModel newTicket = new TicketOfUserModel();
             newTicket.setIdUser(idUser);
             newTicket.setIdCampaign(id);
@@ -205,7 +203,7 @@ public class UserService {
             this.ticketOfUserRepository.save(newTicket);
         }
 
-        // Retorna os números gerados
+       
         return numbersGenerated;
     }
 
