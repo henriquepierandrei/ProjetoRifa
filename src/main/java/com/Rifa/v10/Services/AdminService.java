@@ -1,5 +1,6 @@
 package com.Rifa.v10.Services;
 
+import com.Rifa.v10.Dtos.ReportCampaignDto;
 import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.TicketOfUserModel;
 import com.Rifa.v10.Models.UserModel;
@@ -125,10 +126,41 @@ public class AdminService {
         return this.campaingRepository.findById(id);
     }
 
+    @Transactional
+    public void deleteCampaign(UUID idCampaign) {
+        this.ticketOfUserRepository.deleteByIdCampaign(idCampaign);
+        this.campaingRepository.deleteById(idCampaign);
+    }
+
+    public List<Object> reportAllCampaign(){
+        List<CampaingModel> campaingModels = this.campaingRepository.findByIsOnline(true);
+
+        if (!campaingModels.isEmpty()){
+            List<ReportCampaignDto> reportCampaignDtos = new ArrayList<>();
+
+            for (CampaingModel model : campaingModels){
+                ReportCampaignDto reportCampaignDto = new ReportCampaignDto(model,model.getTicketQuantity(), model.getIdUsersBuyers().size());
+                reportCampaignDtos.add(reportCampaignDto);
+            }
+
+            return Collections.singletonList(reportCampaignDtos);
+        }
+        return null;
 
 
+    }
 
+    public Object reportCampaign(UUID uuid){
+        Optional<CampaingModel> campaingModel = this.campaingRepository.findById(uuid);
 
+        if (!campaingModel.isEmpty()){
+            ReportCampaignDto reportCampaignDto = new ReportCampaignDto(campaingModel.get(),campaingModel.get().getTicketQuantity(), campaingModel.get().getIdUsersBuyers().size());
+
+            return reportCampaignDto;
+        }
+
+        return null;
+    }
 }
 
 //    public List<Integer> generateTicket(UUID id, int quantity, long idUser){
