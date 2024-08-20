@@ -58,6 +58,9 @@ public class AdminController {
 
     }
 
+    // Update Campaign
+    public 
+
 
     // List all winners by campaign ID if there is a winner and they receive an email that they won!
     @GetMapping("/winners")
@@ -139,6 +142,8 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(this.adminService.reportAllCampaign());
     }
+
+
 
 
 
