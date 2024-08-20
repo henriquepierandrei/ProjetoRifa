@@ -85,8 +85,7 @@ public class AdminController {
         List<UserModel> userModels = this.adminService.getUserByCampaign(idCampaign);
 
         Optional<CampaingModel> model = this.adminService.getCampaign(idCampaign);
-
-
+        
         if (userModels.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No winners found for the campaign with ID: " + idCampaign);
         }
