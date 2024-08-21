@@ -77,21 +77,16 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setTo(userModel.getEmail());
-            helper.setSubject("Parabéns " + userModel.getName() + " " + userModel.getLastName() + ", você adquiriu " + model.getNameAward() + " bilhetes!");
+            helper.setSubject("Parabéns " + userModel.getName() + " " + userModel.getLastName() + ", você adquiriu " + quantity + " bilhetes!");
 
 
             String htmlContent = "<html lang='pt-BR'>"
                     + "<body style='background-image: linear-gradient(to right, rgb(245, 245, 209), rgb(243, 233, 233)); display: flex; align-items: center; justify-content: center;'>"
                     + "    <div style='overflow: hidden; position: relative; text-align: left; border-radius: 0.5rem; max-width: 590px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); background-color: #fff;'>"
-                    + "        <button style='position: absolute; right: 10px; top: 10px; display: flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; background-color: #fff; color: black; border: 2px solid #D1D5DB; font-size: 1rem; font-weight: 300; width: 30px; height: 30px; border-radius: 7px; transition: .3s ease;'"
-                    + "            type='button' onmouseover=\"this.style.backgroundColor='#ee0d0d';this.style.border='2px solid #ee0d0d';this.style.color='#fff';\""
-                    + "            onmouseout=\"this.style.backgroundColor='#fff';this.style.border='2px solid #D1D5DB';this.style.color='black';\">×</button>"
                     + "        <div style='padding: 1.25rem 1rem 1rem 1rem;'>"
                     + "            <div style='background: #47c9a2; border-bottom: none; position: relative; text-align: center; margin: -20px -20px 0; border-radius: 5px 5px 0 0; padding: 35px;'>"
                     + "                <div style='display: flex; margin-left: auto; margin-right: auto; background-color: #e2feee; flex-shrink: 0; justify-content: center; align-items: center; width: 3rem; height: 3rem; border-radius: 9999px; animation: animate .6s linear alternate-reverse infinite; transition: .6s ease;'>"
-                    + "                    <svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>"
-                    + "                        <path d='M20 7L9.00004 18L3.99994 13' stroke='#000000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'></path>"
-                    + "                    </svg>"
+                    + "                    <h2 style='margin: auto; font-size: 1.5rem;'>✅</h2>"
                     + "                </div>"
                     + "            </div>"
                     + "            <div style='margin-top: 0.75rem; text-align: center;'>"
