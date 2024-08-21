@@ -105,7 +105,6 @@ public class AdminController {
         userModels.forEach(user2 ->
                 this.emailService.sendEmail(user2.getEmail(), model.get(), user2, idCampaign)
         );
-        
 
         return ResponseEntity.status(HttpStatus.OK).body(responseWinnersDtos);
     }
