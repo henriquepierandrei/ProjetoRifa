@@ -4,6 +4,7 @@ import com.Rifa.v10.Dtos.BuyTicketDto;
 import com.Rifa.v10.Models.CampaingModel;
 import com.Rifa.v10.Models.TicketOfUserModel;
 import com.Rifa.v10.Models.UserModel;
+import com.Rifa.v10.Services.EmailService;
 import com.Rifa.v10.Services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final EmailService emailService;
 
     // Get all tickets
     @GetMapping("/tickets")
@@ -42,6 +44,8 @@ public class UserController {
         if (campaingModelOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Campaign Not Found!");}
         List<Integer> integers = this.userService.generateTicket(buyTicketDto.id(), buyTicketDto.quantity(), userModel.getId());
         if (integers.isEmpty()){return ResponseEntity.badRequest().build();}
+
+        this.emailService.sendEmailBuy(userModel.getEmail(), campaingModelOptional.get(), userModel, buyTicketDto.quantity());
         return ResponseEntity.ok(integers);
     }
 
