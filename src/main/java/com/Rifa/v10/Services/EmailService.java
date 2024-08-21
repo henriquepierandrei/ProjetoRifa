@@ -67,10 +67,6 @@ public class EmailService {
     }
 
 
-
-
-
-
     public void sendEmailBuy(String to, CampaingModel model, UserModel userModel, int quantity) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -110,6 +106,66 @@ public class EmailService {
             e.printStackTrace();
         }
     }
+
+
+    public void sendEmailReport(String to, CampaingModel model, UserModel userModel, int quantity) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(userModel.getEmail());
+            helper.setSubject("Relatório da Campanha " + model.getNameAward());
+            int val = model.getInicialQuantity()-model.getTicketQuantity();
+            String status="";
+
+            if (model.isOnline()){
+                status="Online";
+            }else{
+                status="Offline";
+            }
+
+            String htmlContent = "<html lang='pt-BR'>"
+                    + "<body style='display: flex; justify-content: center; align-items: center;'>"
+                    + "    <div style='display: flex; flex-direction: column; justify-content: space-between; border-radius: 0.75rem; background-color: rgb(231, 216, 216); width: 550px; height: auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);'>"
+                    + "        <div style='position: relative; background-clip: border-box; margin-top: 1.5rem; margin-left: 1rem; margin-right: 1rem; border-radius: 0.75rem; background-color: rgb(33, 150, 243); box-shadow: 0 10px 15px -3px rgba(33,150,243,.4), 0 4px 6px -4px rgba(33,150,243,.4); height: 3rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3em;'>"
+                    + "            <h3><strong>" + model.getId() + "</strong></h3>"
+                    + "        </div>"
+                    + "        <div style='border: none; padding: 1rem; text-align: center; background-color: rgb(243, 238, 238); width: 85%; margin: 0 auto 50% auto;'>"
+                    + "            <p style='color: rgb(33, 150, 243); letter-spacing: 0; line-height: 0.3; font-weight: 600; font-size: 1.5rem; margin-bottom: 0.1rem;'>Relatório</p>"
+                    + "            <ul style='text-align: start;'>"
+                    + "                <li>Prêmio: <strong style='font-weight: bold;'>" + model.getNameAward() + "</strong></li>"
+                    + "                <li>Descrição: <strong>" + model.getDescription() + "</strong></li>"
+                    + "                <hr><br>"
+                    + "                <li>Preço unitário: <strong>"+ model.getPrice() + "</strong></li>"
+                    + "                <li>Números Premiados: <strong>" + model.getWinningNumbers().toString().replace("[]","") + "</strong></li>"
+                    + "                <hr><br>"
+                    + "                <li>Quantidade bilhetes: <strong>" + model.getInicialQuantity() + "</strong></li>"
+                    + "                <li>Bilhetes Adquiridos: <strong>" + val + "</strong></li>"
+                    + "                <li>Status: <strong>" + status + "</strong></li>"
+                    + "            </ul>"
+                    + "        </div>"
+                    + "        <div style='background-color: rgb(243, 235, 235); margin: -40% auto 10% auto; width: 85%; height: auto; padding: 10px; border-radius: 10px;'>"
+                    + "            <h2 style='margin-bottom: 15px; color: rgb(60, 65, 60); text-align: center;'>Porcentagem de Bilhetes Adquiridos:</h2>"
+                    + "            <div style='background-color: rgb(0, 202, 0); width: 100%; height: 10px; border-radius: 10px;'></div>"
+                    + "            <p style='text-align: center;'><strong>xxxxxxx</strong>%</p>"
+                    + "        </div>"
+                    + "    </div>"
+                    + "</body>"
+                    + "</html>";
+
+
+
+
+
+            helper.setText(htmlContent, true);
+
+            javaMailSender.send(message);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
