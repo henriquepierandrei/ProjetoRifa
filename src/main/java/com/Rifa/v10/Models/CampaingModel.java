@@ -24,6 +24,8 @@ public class CampaingModel {
     private String nameAward;
     private String description;
 
+    private Double price;
+
 
     private List<Integer> winningNumbers;
     private int ticketQuantity;

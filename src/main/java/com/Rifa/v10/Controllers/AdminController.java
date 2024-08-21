@@ -155,7 +155,7 @@ public class AdminController {
         if (this.adminService.reportCampaign(idCampaign)==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no online campaigns or non-existent campaigns!");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(this.adminService.reportAllCampaign());
+        return ResponseEntity.status(HttpStatus.OK).body(this.adminService.reportCampaign(idCampaign));
     }
 
 

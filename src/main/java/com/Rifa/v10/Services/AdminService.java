@@ -138,8 +138,9 @@ public class AdminService {
         if (!campaingModels.isEmpty()){
             List<ReportCampaignDto> reportCampaignDtos = new ArrayList<>();
 
-            for (CampaingModel model : campaingModels){
-                ReportCampaignDto reportCampaignDto = new ReportCampaignDto(model,model.getTicketQuantity(), model.getIdUsersBuyers().size());
+            for (CampaingModel campaingModel : campaingModels){
+                ReportCampaignDto reportCampaignDto = new ReportCampaignDto(campaingModel,campaingModel.getTicketQuantity(), campaingModel.getIdUsersBuyers().size(), "R$ "+campaingModel.getPrice(),
+                        "R$ " + campaingModel.getPrice()*campaingModel.getInicialQuantity(), "R$ " + campaingModel.getPrice()*(campaingModel.getTicketQuantity()));
                 reportCampaignDtos.add(reportCampaignDto);
             }
 
@@ -154,7 +155,8 @@ public class AdminService {
         Optional<CampaingModel> campaingModel = this.campaingRepository.findById(uuid);
 
         if (!campaingModel.isEmpty()){
-            ReportCampaignDto reportCampaignDto = new ReportCampaignDto(campaingModel.get(),campaingModel.get().getTicketQuantity(), campaingModel.get().getIdUsersBuyers().size());
+            ReportCampaignDto reportCampaignDto = new ReportCampaignDto(campaingModel.get(),campaingModel.get().getTicketQuantity(), campaingModel.get().getIdUsersBuyers().size(), "R$ "+campaingModel.get().getPrice(),
+                    "R$ " + campaingModel.get().getPrice()*campaingModel.get().getInicialQuantity(), "R$ " + campaingModel.get().getPrice()*(campaingModel.get().getTicketQuantity()) );
 
             return reportCampaignDto;
         }
