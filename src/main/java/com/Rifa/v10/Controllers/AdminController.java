@@ -46,7 +46,9 @@ public class AdminController {
         model.setWinningNumbers(createCampaignDto.numbersWinning());
         model.setInicialQuantity(createCampaignDto.quantityTickets());
         model.setIdUsersBuyers(new ArrayList<>());
-        model.setGeneratedNumbers(new ArrayList<>());
+//        model.setGeneratedNumbers(new ArrayList<>());
+
+        model.setGeneratedNumbers(this.adminService.generateNumbers(createCampaignDto.quantityTickets()));
 
 
         this.adminService.saveCampaing(model);

@@ -130,7 +130,7 @@ public class UserService {
 //        return numbersGenerated;
 //    }
 
-    public List<Integer> generateTicket(UUID id, int quantity, long idUser) {
+    public List<Integer> generateTicketOld(UUID id, int quantity, long idUser) {
 
         Optional<CampaingModel> campaingModelOptional = this.campaingRepository.findById(id);
         if (campaingModelOptional.isEmpty()) {
@@ -206,6 +206,70 @@ public class UserService {
 
         return numbersGenerated;
     }
+
+    public List<Integer> generateTicket(UUID id, int quantity, long idUser) {
+
+        Optional<CampaingModel> campaingModelOptional = this.campaingRepository.findById(id);
+        if (campaingModelOptional.isEmpty()) {
+            throw new NoSuchElementException("Campaign not found");
+
+        }
+
+        if (campaingModelOptional.get().getTicketQuantity()==1 || !campaingModelOptional.get().isOnline()){
+            List<Integer> listEmpty = new ArrayList<>();
+            return listEmpty;
+        }
+
+        CampaingModel campaingModel = campaingModelOptional.get();
+        int ticketQuantity = campaingModel.getTicketQuantity();
+
+        if (ticketQuantity < quantity) {
+            throw new IllegalArgumentException("Not enough tickets available in the campaign");
+        }
+
+
+        List<Integer> numbersUser = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < quantity; i++){
+            int number = random.nextInt(campaingModel.getGeneratedNumbers().size());
+            numbersUser.add(campaingModel.getGeneratedNumbers().get(number));
+            campaingModel.getGeneratedNumbers().remove(number);
+        }
+
+
+        campaingModel.setTicketQuantity(ticketQuantity-quantity);
+
+        List<Long> idBuyers = campaingModel.getIdUsersBuyers();
+        if (!idBuyers.contains(idUser)) {
+            idBuyers.add(idUser);
+        }
+
+        campaingModel.setIdUsersBuyers(idBuyers);
+
+
+
+        this.campaingRepository.save(campaingModel);
+
+        Optional<TicketOfUserModel> ticketOfUserModel = this.ticketOfUserRepository.findByIdUserAndIdCampaign(idUser, id);
+        if (ticketOfUserModel.isPresent()) {
+            TicketOfUserModel userTicket = ticketOfUserModel.get();
+            List<Integer> numberOfUser = new ArrayList<>(userTicket.getNumbersOfUser());
+            numberOfUser.addAll(numbersUser);
+            userTicket.setNumbersOfUser(numberOfUser);
+            this.ticketOfUserRepository.save(userTicket);
+        } else {
+
+            TicketOfUserModel newTicket = new TicketOfUserModel();
+            newTicket.setIdUser(idUser);
+            newTicket.setIdCampaign(id);
+            newTicket.setNumbersOfUser(numbersUser);
+            this.ticketOfUserRepository.save(newTicket);
+        }
+
+
+        return numbersUser;
+    }
+
 
 
     public Optional<CampaingModel> findCampaignById(UUID id) {

@@ -35,7 +35,7 @@ public class AdminService {
         for(int i = 0; i < quantity; i++){
             integers.add(i);
         }
-        Collections.shuffle(integers);
+
 
         return integers;
     }
@@ -161,6 +161,9 @@ public class AdminService {
 
         return null;
     }
+
+
+
 }
 
 //    public List<Integer> generateTicket(UUID id, int quantity, long idUser){
