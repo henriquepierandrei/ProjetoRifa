@@ -20,3 +20,7 @@
 ![image](https://github.com/user-attachments/assets/91701b56-8f21-4a3b-9225-6a32c9341b5f)
 
  
+# 📩 Emails Templates
+![image](https://github.com/user-attachments/assets/6cb8ae63-dc82-48fb-af79-7b62e2ccd6fb)
+![image](https://github.com/user-attachments/assets/474be96f-b38f-4634-a793-c025203d01c0)
+![image](https://github.com/user-attachments/assets/12cdd965-aa4f-46f5-ad28-79649452866b)
