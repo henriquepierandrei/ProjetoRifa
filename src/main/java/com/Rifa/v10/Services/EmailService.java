@@ -124,9 +124,9 @@ public class EmailService {
             String colorStatus = "";
 
             if (model.isOnline()){
-                colorStatus="color:00ca00;";
+                colorStatus="#00ca00;";
             }else{
-                colorStatus="color:red;";
+                colorStatus="red;";
             }
 
 
@@ -164,7 +164,7 @@ public class EmailService {
                     + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
                     + "                    <li style='margin-bottom: 5px;'>Quantidade bilhetes: <strong>" + model.getInicialQuantity() + "</strong></li>"
                     + "                    <li style='margin-bottom: 5px;'>Bilhetes Adquiridos: <strong>" + val + "</strong></li>"
-                    + "                    <li style='margin-bottom: 5px; " + colorStatus + "'>Status: <strong>" + status + "</strong></li>"
+                    + "                    <li style='margin-bottom: 5px; color:" + colorStatus + ";'>Status: <strong>" + status + "</strong></li>"
                     + "                </ul>"
                     + "            </td>"
                     + "        </tr>"
