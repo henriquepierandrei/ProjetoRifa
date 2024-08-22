@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -116,7 +117,7 @@ public class EmailService {
             helper.setTo(userModel.getEmail());
             helper.setSubject("Relatório da Campanha " + model.getNameAward());
             int val = model.getInicialQuantity()-model.getTicketQuantity();
-            
+
 
             String status = model.isOnline() ? "Online" : "Offline";
 
@@ -124,7 +125,13 @@ public class EmailService {
             System.out.println(val);
 
 
+
             double porcent = ((double) val / model.getInicialQuantity()) * 100;
+
+            DecimalFormat df = new DecimalFormat("#0.0");
+            DecimalFormat df2 = new DecimalFormat("#0.00");
+            String porcentFormat = df.format(porcent).replace('.', ',');
+            String priceFormat = df2.format(model.getPrice()).replace('.',',');
 
 
             System.out.println(porcent);
@@ -144,7 +151,7 @@ public class EmailService {
                     + "                    <li style='margin-bottom: 5px;'>Prêmio: <strong>" + model.getNameAward() + "</strong></li>"
                     + "                    <li style='margin-bottom: 5px;'>Descrição: <strong>" + model.getDescription() + "</strong></li>"
                     + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
-                    + "                    <li style='margin-bottom: 5px;'>Preço unitário: R$<strong>" + model.getPrice() + "</strong></li>"
+                    + "                    <li style='margin-bottom: 5px;'>Preço unitário: R$<strong>" + priceFormat + "</strong></li>"
                     + "                    <li style='margin-bottom: 5px;'>Números Premiados: <strong>" + model.getWinningNumbers().toString()+ "</strong></li>"
                     + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
                     + "                    <li style='margin-bottom: 5px;'>Quantidade bilhetes: <strong>" + model.getInicialQuantity() + "</strong></li>"
@@ -156,8 +163,8 @@ public class EmailService {
                     + "        <tr>"
                     + "            <td style='background-color: #f3ebeb; padding: 20px; border-radius: 0 0 10px 10px;'>"
                     + "                <h2 style='margin-bottom: 15px; color: #3c413c; text-align: center;'>Porcentagem de Bilhetes Adquiridos:</h2>"
-                    + "                <div style='background-color: #00ca00; width: " + porcent + "%; height: 10px; border-radius: 10px; margin: 0 auto;'></div>"
-                    + "                <p style='text-align: center; background-color: #2196F3;width: max-content;margin: 10px auto auto auto;padding: 5px;border-radius: 10px;color: white;font-size: 1.2em;'><strong>" + porcent + "%</strong></p>"
+                    + "                <div style='background-color: #00ca00; width: " + porcent + "%; height: 10px; border-radius: 10px; margin: 0px auto 0px 0px'></div>"
+                    + "                <p style='text-align: center; background-color: #2196F3;width: max-content;margin: 10px auto auto auto;padding: 5px;border-radius: 10px;color: white;font-size: 1.2em;'><strong>" + porcentFormat + "%</strong></p>"
                     + "            </td>"
                     + "        </tr>"
                     + "    </table>"
