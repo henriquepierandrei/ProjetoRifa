@@ -49,7 +49,7 @@ public class AdminController {
 //        model.setGeneratedNumbers(new ArrayList<>());
 
         model.setGeneratedNumbers(this.adminService.generateNumbers(createCampaignDto.quantityTickets()));
-
+        model.setPrice(createCampaignDto.price());
 
         this.adminService.saveCampaing(model);
 

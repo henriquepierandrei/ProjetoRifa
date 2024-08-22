@@ -116,47 +116,54 @@ public class EmailService {
             helper.setTo(userModel.getEmail());
             helper.setSubject("Relatório da Campanha " + model.getNameAward());
             int val = model.getInicialQuantity()-model.getTicketQuantity();
-            String status="";
+            
 
-            if (model.isOnline()){
-                status="Online";
-            }else{
-                status="Offline";
-            }
+            String status = model.isOnline() ? "Online" : "Offline";
 
 
+            System.out.println(val);
 
 
-            int porcent= val / model.getInicialQuantity() * 100;
+            double porcent = ((double) val / model.getInicialQuantity()) * 100;
+
+
+            System.out.println(porcent);
 
             String htmlContent = "<html lang='pt-BR'>"
-                    + "<body style='display: flex; justify-content: center; align-items: center;flex-direction:column;'>"
-                    + "    <div style='display: flex; flex-direction: column; justify-content: space-between; border-radius: 0.75rem; background-color: rgb(231, 216, 216); width: auto; height: auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);'>"
-                    + "        <div style='position: relative; background-clip: border-box; margin-top: 1.5rem; margin-left: 1rem; margin-right: 1rem; border-radius: 0.75rem; background-color: rgb(33, 150, 243); box-shadow: 0 10px 15px -3px rgba(33,150,243,.4), 0 4px 6px -4px rgba(33,150,243,.4); height: 3rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3em;width:auto;'>"
-                    + "            <h3><strong>" + model.getId() + "</strong></h3>"
-                    + "        </div>"
-                    + "        <div style='border: none; padding: 1rem; text-align: center; background-color: rgb(243, 238, 238); width: 85%; margin: 0 auto 50% auto;'>"
-                    + "            <p style='color: rgb(33, 150, 243); letter-spacing: 0; line-height: 0.3; font-weight: 600; font-size: 1.5rem; margin-bottom: 0.1rem;'>Relatório</p>"
-                    + "            <ul style='text-align: start;'>"
-                    + "                <li>Prêmio: <strong style='font-weight: bold;'>" + model.getNameAward() + "</strong></li>"
-                    + "                <li>Descrição: <strong>" + model.getDescription() + "</strong></li>"
-                    + "                <hr><br>"
-                    + "                <li>Preço unitário: <strong>"+ model.getPrice() + "</strong></li>"
-                    + "                <li>Números Premiados: <strong>" + model.getWinningNumbers().toString().replace("[]","") + "</strong></li>"
-                    + "                <hr><br>"
-                    + "                <li>Quantidade bilhetes: <strong>" + model.getInicialQuantity() + "</strong></li>"
-                    + "                <li>Bilhetes Adquiridos: <strong>" + val + "</strong></li>"
-                    + "                <li>Status: <strong>" + status + "</strong></li>"
-                    + "            </ul>"
-                    + "        </div>"
-                    + "        <div style='background-color: rgb(243, 235, 235); margin: -40% auto 10% auto; width: 85%; height: auto; padding: 10px; border-radius: 10px;'>"
-                    + "            <h2 style='margin-bottom: 15px; color: rgb(60, 65, 60); text-align: center;'>Porcentagem de Bilhetes Adquiridos:</h2>"
-                    + "            <div style='background-color: rgb(0, 202, 0); width: "+porcent+"% height: 10px; border-radius: 10px;'></div>"
-                    + "            <p style='text-align: center;'><strong>" + porcent + "</strong>%</p>"
-                    + "        </div>"
-                    + "    </div>"
+                    + "<body style='display: flex; justify-content: center; align-items: center; flex-direction: column;'>"
+                    + "    <table align='center' style='border-spacing: 0; width: 600px; border: 2px solid #2196F3 ; width: 600px; background-color: #f3ecec; padding: 0px 0px 15px 0px; border-radius: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);'>"
+                    + "        <tr>"
+                    + "            <td align='center' style='padding: 20px 0; background-color: #2196F3; border-radius: 10px 10px 0 0; color: white; font-size: 1.3em;'>"
+                    + "                <strong>" + model.getId() + "</strong>"
+                    + "            </td>"
+                    + "        </tr>"
+                    + "        <tr>"
+                    + "            <td style='padding: 20px; background-color: #f3ecec;'>"
+                    + "                <p style='color: #2196F3; font-weight: 600; font-size: 1.5rem; margin-bottom: 10px; text-align: center;'>Relatório</p>"
+                    + "                <ul style='list-style: none; padding: 0; margin: 0;'>"
+                    + "                    <li style='margin-bottom: 5px;'>Prêmio: <strong>" + model.getNameAward() + "</strong></li>"
+                    + "                    <li style='margin-bottom: 5px;'>Descrição: <strong>" + model.getDescription() + "</strong></li>"
+                    + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
+                    + "                    <li style='margin-bottom: 5px;'>Preço unitário: R$<strong>" + model.getPrice() + "</strong></li>"
+                    + "                    <li style='margin-bottom: 5px;'>Números Premiados: <strong>" + model.getWinningNumbers().toString()+ "</strong></li>"
+                    + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
+                    + "                    <li style='margin-bottom: 5px;'>Quantidade bilhetes: <strong>" + model.getInicialQuantity() + "</strong></li>"
+                    + "                    <li style='margin-bottom: 5px;'>Bilhetes Adquiridos: <strong>" + val + "</strong></li>"
+                    + "                    <li style='margin-bottom: 5px;'>Status: <strong>" + status + "</strong></li>"
+                    + "                </ul>"
+                    + "            </td>"
+                    + "        </tr>"
+                    + "        <tr>"
+                    + "            <td style='background-color: #f3ebeb; padding: 20px; border-radius: 0 0 10px 10px;'>"
+                    + "                <h2 style='margin-bottom: 15px; color: #3c413c; text-align: center;'>Porcentagem de Bilhetes Adquiridos:</h2>"
+                    + "                <div style='background-color: #00ca00; width: " + porcent + "%; height: 10px; border-radius: 10px; margin: 0 auto;'></div>"
+                    + "                <p style='text-align: center; background-color: #2196F3;width: max-content;margin: 10px auto auto auto;padding: 5px;border-radius: 10px;color: white;font-size: 1.2em;'><strong>" + porcent + "%</strong></p>"
+                    + "            </td>"
+                    + "        </tr>"
+                    + "    </table>"
                     + "</body>"
                     + "</html>";
+
 
 
 
