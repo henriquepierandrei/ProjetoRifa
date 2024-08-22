@@ -132,6 +132,9 @@ public class EmailService {
 
             System.out.println(val);
 
+            double ValueTotal = model.getPrice()*model.getInicialQuantity();
+            double ValueNow = model.getPrice()*val
+
 
 
             double porcent = ((double) val / model.getInicialQuantity()) * 100;
@@ -140,6 +143,10 @@ public class EmailService {
             DecimalFormat df2 = new DecimalFormat("#0.00");
             String porcentFormat = df.format(porcent).replace('.', ',');
             String priceFormat = df2.format(model.getPrice()).replace('.',',');
+
+            String valueTotalFormated = df2.format(porcent).replace('.', ',');
+            String valueNowFormated = df2.format(porcent).replace('.', ',');
+
 
 
             System.out.println(porcent);
@@ -159,12 +166,16 @@ public class EmailService {
                     + "                    <li style='margin-bottom: 5px;'>Prêmio: <strong>" + model.getNameAward() + "</strong></li>"
                     + "                    <li style='margin-bottom: 5px;'>Descrição: <strong>" + model.getDescription() + "</strong></li>"
                     + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
-                    + "                    <li style='margin-bottom: 5px;'>Preço unitário: R$<strong>" + priceFormat + "</strong></li>"
+                    + "                    <li style='margin-bottom: 5px;'>Preço unitário: R$ <strong>" + priceFormat + "</strong></li>"
                     + "                    <li style='margin-bottom: 5px;'>Números Premiados: <strong>" + model.getWinningNumbers().toString()+ "</strong></li>"
                     + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
                     + "                    <li style='margin-bottom: 5px;'>Quantidade bilhetes: <strong>" + model.getInicialQuantity() + "</strong></li>"
                     + "                    <li style='margin-bottom: 5px;'>Bilhetes Adquiridos: <strong>" + val + "</strong></li>"
                     + "                    <li style='margin-bottom: 5px; color:" + colorStatus + ";'>Status: <strong>" + status + "</strong></li>"
+                    + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
+                    + "                    <li style='margin-bottom: 5px;'>Valor Arrecadado: R$ <strong>" + valueNowFormated + "</strong></li>"
+                    + "                    <li style='margin-bottom: 5px;'>Valor Total: R$ <strong>" + valueTotalFormated + "</strong></li>"
+
                     + "                </ul>"
                     + "            </td>"
                     + "        </tr>"
