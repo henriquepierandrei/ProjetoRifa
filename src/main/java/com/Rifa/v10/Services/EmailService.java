@@ -108,7 +108,7 @@ public class EmailService {
     }
 
 
-    public void sendEmailReport(String to, CampaingModel model, UserModel userModel, int quantity) {
+    public void sendEmailReport(String to, CampaingModel model, UserModel userModel) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -123,6 +123,11 @@ public class EmailService {
             }else{
                 status="Offline";
             }
+
+
+
+
+            int porcent= val / model.getInicialQuantity() * 100;
 
             String htmlContent = "<html lang='pt-BR'>"
                     + "<body style='display: flex; justify-content: center; align-items: center;'>"
@@ -146,8 +151,8 @@ public class EmailService {
                     + "        </div>"
                     + "        <div style='background-color: rgb(243, 235, 235); margin: -40% auto 10% auto; width: 85%; height: auto; padding: 10px; border-radius: 10px;'>"
                     + "            <h2 style='margin-bottom: 15px; color: rgb(60, 65, 60); text-align: center;'>Porcentagem de Bilhetes Adquiridos:</h2>"
-                    + "            <div style='background-color: rgb(0, 202, 0); width: 100%; height: 10px; border-radius: 10px;'></div>"
-                    + "            <p style='text-align: center;'><strong>xxxxxxx</strong>%</p>"
+                    + "            <div style='background-color: rgb(0, 202, 0); width: "+porcent+"% height: 10px; border-radius: 10px;'></div>"
+                    + "            <p style='text-align: center;'><strong>" + porcent + "</strong>%</p>"
                     + "        </div>"
                     + "    </div>"
                     + "</body>"

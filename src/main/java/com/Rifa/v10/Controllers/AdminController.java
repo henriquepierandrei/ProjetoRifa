@@ -151,10 +151,17 @@ public class AdminController {
 
     // Report about campaign by id
     @GetMapping("/report")
-    public ResponseEntity<?> reportCampaignById(@RequestParam(value = "idCampaign") UUID idCampaign){
+    public ResponseEntity<?> reportCampaignById(@RequestParam(value = "idCampaign") UUID idCampaign, @AuthenticationPrincipal UserModel userModel){
         if (this.adminService.reportCampaign(idCampaign)==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no online campaigns or non-existent campaigns!");
         }
+        Optional<CampaingModel> campaingModel = this.adminService.getCampaign(idCampaign);
+        if (campaingModel.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no online campaigns or non-existent campaigns!");
+
+        }
+
+        this.emailService.sendEmailReport(userModel.getEmail(), campaingModel.get(), userModel);
         return ResponseEntity.status(HttpStatus.OK).body(this.adminService.reportCampaign(idCampaign));
     }
 
