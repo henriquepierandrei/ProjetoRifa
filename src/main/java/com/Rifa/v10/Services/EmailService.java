@@ -1,31 +1,21 @@
 package com.Rifa.v10.Services;
 
 import com.Rifa.v10.Models.CampaingModel;
-import com.Rifa.v10.Models.TicketOfUserModel;
 import com.Rifa.v10.Models.UserModel;
-import com.Rifa.v10.Repositories.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final AdminService adminService;
-    private final UserRepository userRepository;
     private final JavaMailSender javaMailSender;
 
 

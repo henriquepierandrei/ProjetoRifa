@@ -43,6 +43,8 @@ public class UserController {
         Optional<CampaingModel> campaingModelOptional = this.userService.findCampaignById(buyTicketDto.id());
         if (campaingModelOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Campaign Not Found!");}
         List<Integer> integers = this.userService.generateTicket(buyTicketDto.id(), buyTicketDto.quantity(), userModel.getId());
+
+
         if (integers.isEmpty()){return ResponseEntity.badRequest().build();}
 
         this.emailService.sendEmailBuy(userModel.getEmail(), campaingModelOptional.get(), userModel, buyTicketDto.quantity());

@@ -230,11 +230,13 @@ public class UserService {
 
         List<Integer> numbersUser = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < quantity; i++){
-            int number = random.nextInt(campaingModel.getGeneratedNumbers().size());
-            numbersUser.add(campaingModel.getGeneratedNumbers().get(number));
+        for (int i = 0; i < quantity; i++) {
+            int index = random.nextInt(campaingModel.getGeneratedNumbers().size());
+            Integer number = campaingModel.getGeneratedNumbers().get(index);
+            numbersUser.add(number);
             campaingModel.getGeneratedNumbers().remove(number);
         }
+
 
 
         campaingModel.setTicketQuantity(ticketQuantity-quantity);
