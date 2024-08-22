@@ -132,8 +132,8 @@ public class EmailService {
 
             System.out.println(val);
 
-            double ValueTotal = model.getPrice()*model.getInicialQuantity();
-            double ValueNow = model.getPrice()*val;
+            double valueTotal = model.getPrice()*model.getInicialQuantity();
+            double valueNow = model.getPrice()*val;
 
 
 
@@ -144,8 +144,8 @@ public class EmailService {
             String porcentFormat = df.format(porcent).replace('.', ',');
             String priceFormat = df2.format(model.getPrice()).replace('.',',');
 
-            String valueTotalFormated = df2.format(porcent).replace('.', ',');
-            String valueNowFormated = df2.format(porcent).replace('.', ',');
+            String valueTotalFormated = df2.format(valueTotal).replace('.', ',');
+            String valueNowFormated = df2.format(valueNow).replace('.', ',');
 
 
 
