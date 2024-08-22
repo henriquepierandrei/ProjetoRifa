@@ -133,7 +133,7 @@ public class EmailService {
             System.out.println(val);
 
             double ValueTotal = model.getPrice()*model.getInicialQuantity();
-            double ValueNow = model.getPrice()*val
+            double ValueNow = model.getPrice()*val;
 
 
 
