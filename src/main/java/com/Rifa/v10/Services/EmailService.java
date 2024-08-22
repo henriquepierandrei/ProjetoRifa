@@ -172,7 +172,7 @@ public class EmailService {
                     + "        <tr>"
                     + "            <td style='background-color: #f3ebeb; padding: 20px; border-radius: 0 0 10px 10px;'>"
                     + "                <h2 style='margin-bottom: 15px; color: #3c413c; text-align: center;'>Porcentagem de Bilhetes Adquiridos:</h2>"
-                    + "                <div style='background-color: #00ca00; width: " + porcent + "%; height: 10px; border-radius: 10px; margin: 0px auto 0px 0px'><div style='width:20px;height:20px;background-color:#00ca00;margin-left:95%;border-radius:100%;bottom:5px;position:relative;'></div></div>"
+                    + "                <div style='background-color: #00ca00; width: " + porcent + "%; height: 10px; border-radius: 10px; margin: 0px auto 0px 0px'></div>"
                     + "                <p style='text-align: center; background-color: #2196F3;width: max-content;margin: 10px auto auto auto;padding: 5px;border-radius: 10px;color: white;font-size: 1.2em;'><strong>" + porcentFormat + "%</strong></p>"
                     + "            </td>"
                     + "        </tr>"
