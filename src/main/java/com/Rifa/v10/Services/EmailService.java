@@ -130,9 +130,9 @@ public class EmailService {
             int porcent= val / model.getInicialQuantity() * 100;
 
             String htmlContent = "<html lang='pt-BR'>"
-                    + "<body style='display: flex; justify-content: center; align-items: center;'>"
-                    + "    <div style='display: flex; flex-direction: column; justify-content: space-between; border-radius: 0.75rem; background-color: rgb(231, 216, 216); width: 550px; height: auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);'>"
-                    + "        <div style='position: relative; background-clip: border-box; margin-top: 1.5rem; margin-left: 1rem; margin-right: 1rem; border-radius: 0.75rem; background-color: rgb(33, 150, 243); box-shadow: 0 10px 15px -3px rgba(33,150,243,.4), 0 4px 6px -4px rgba(33,150,243,.4); height: 3rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3em;'>"
+                    + "<body style='display: flex; justify-content: center; align-items: center;flex-direction:column;'>"
+                    + "    <div style='display: flex; flex-direction: column; justify-content: space-between; border-radius: 0.75rem; background-color: rgb(231, 216, 216); width: auto; height: auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);'>"
+                    + "        <div style='position: relative; background-clip: border-box; margin-top: 1.5rem; margin-left: 1rem; margin-right: 1rem; border-radius: 0.75rem; background-color: rgb(33, 150, 243); box-shadow: 0 10px 15px -3px rgba(33,150,243,.4), 0 4px 6px -4px rgba(33,150,243,.4); height: 3rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3em;width:auto;'>"
                     + "            <h3><strong>" + model.getId() + "</strong></h3>"
                     + "        </div>"
                     + "        <div style='border: none; padding: 1rem; text-align: center; background-color: rgb(243, 238, 238); width: 85%; margin: 0 auto 50% auto;'>"
