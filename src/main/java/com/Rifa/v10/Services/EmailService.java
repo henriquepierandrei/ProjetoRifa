@@ -162,7 +162,7 @@ public class EmailService {
                     + "        <tr>"
                     + "            <td style='padding: 20px; background-color: #f3ecec;'>"
                     + "                <p style='color: #2196F3; font-weight: 600; font-size: 1.7rem; margin-bottom: 10px; text-align: center;'>Relatório</p>"
-                    + "                <ul style='list-style: none; padding: 0; margin: 0;'>"
+                    + "                <ul style='list-style: none; padding: 0; margin: 0;font-size: 1.2 rem;'>"
                     + "                    <li style='margin-bottom: 5px;'>Prêmio: <strong>" + model.getNameAward() + "</strong></li>"
                     + "                    <li style='margin-bottom: 5px;'>Descrição: <strong>" + model.getDescription() + "</strong></li>"
                     + "                    <hr style='border: 0; border-top: 1px solid #ccc; margin: 10px 0;'>"
@@ -189,9 +189,6 @@ public class EmailService {
                     + "    </table>"
                     + "</body>"
                     + "</html>";
-
-
-
 
 
 
